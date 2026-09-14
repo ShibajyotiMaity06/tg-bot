@@ -1,0 +1,77 @@
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id               String           @id @default(cuid())
+  telegramUserId   String           @unique
+  telegramUsername String?
+  firstName        String?
+  createdAt        DateTime         @default(now())
+  updatedAt        DateTime         @updatedAt
+
+  subscriptions    Subscription[]
+  payments         Payment[]
+  telegramAccesses TelegramAccess[]
+
+  @@index([telegramUserId])
+}
+
+model Subscription {
+  id                     String           @id @default(cuid())
+  userId                 String
+  user                   User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  razorpaySubscriptionId String?          @unique
+  razorpayPlanId         String?
+  status                 String           @default("PENDING") // ACTIVE, PENDING, EXPIRED, CANCELLED, HALTED
+  startDate              DateTime?
+  endDate                DateTime?
+  createdAt              DateTime         @default(now())
+  updatedAt              DateTime         @updatedAt
+
+  payments               Payment[]
+  telegramAccesses       TelegramAccess[]
+
+  @@index([userId])
+  @@index([status])
+  @@index([endDate])
+}
+
+model Payment {
+  id                String        @id @default(cuid())
+  userId            String
+  user              User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  subscriptionId    String?
+  subscription      Subscription? @relation(fields: [subscriptionId], references: [id], onDelete: SetNull)
+  razorpayPaymentId String?       @unique
+  razorpayOrderId   String?       @unique
+  amount            Float
+  currency          String        @default("INR")
+  status            String        @default("CAPTURED") // CAPTURED, FAILED, REFUNDED, CREATED
+  createdAt         DateTime      @default(now())
+
+  @@index([userId])
+  @@index([razorpayPaymentId])
+}
+
+model TelegramAccess {
+  id             String        @id @default(cuid())
+  userId         String
+  user           User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  subscriptionId String?
+  subscription   Subscription? @relation(fields: [subscriptionId], references: [id], onDelete: SetNull)
+  inviteLink     String?
+  status         String        @default("ACTIVE") // ACTIVE, PENDING, REVOKED, EXPIRED, FAILED
+  joinedAt       DateTime?
+  revokedAt      DateTime?
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+
+  @@index([userId])
+  @@index([status])
+}
