@@ -42,9 +42,9 @@ export async function recordPayment(params: RecordPaymentParams) {
     return await prisma.payment.create({
       data: {
         userId,
-        subscriptionId,
+        ...(subscriptionId ? { subscriptionId } : {}),
         razorpayPaymentId,
-        razorpayOrderId,
+        ...(razorpayOrderId ? { razorpayOrderId } : {}),
         amount,
         currency,
         status

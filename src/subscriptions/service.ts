@@ -46,6 +46,15 @@ export async function activateSubscription(params: ActivateSubscriptionParams) {
 
   if (currentActive && currentActive.endDate && currentActive.endDate > new Date()) {
     finalEndDate = new Date(currentActive.endDate.getTime() + durationDays * 24 * 60 * 60 * 1000);
+    return prisma.subscription.update({
+      where: { id: currentActive.id },
+      data: {
+        status: 'ACTIVE',
+        endDate: finalEndDate,
+        ...(razorpaySubscriptionId ? { razorpaySubscriptionId } : {}),
+        ...(razorpayPlanId ? { razorpayPlanId } : {})
+      }
+    });
   }
 
   try {
@@ -70,8 +79,8 @@ export async function activateSubscription(params: ActivateSubscriptionParams) {
     return prisma.subscription.create({
       data: {
         userId,
-        razorpaySubscriptionId,
-        razorpayPlanId,
+        ...(razorpaySubscriptionId ? { razorpaySubscriptionId } : {}),
+        ...(razorpayPlanId ? { razorpayPlanId } : {}),
         status: 'ACTIVE',
         startDate,
         endDate: finalEndDate

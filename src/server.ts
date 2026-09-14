@@ -12,9 +12,9 @@ async function bootstrap() {
   // 1. Verify Database connection
   try {
     await prisma.$connect();
-    logger.info(' Connected to SQLite database successfully');
+    logger.info(' Connected to MongoDB database successfully');
   } catch (error: any) {
-    logger.error('❌ Failed to connect to SQLite database:', { error: error.message });
+    logger.error('❌ Failed to connect to MongoDB database:', { error: error.message });
     process.exit(1);
   }
 

@@ -5,11 +5,12 @@ export const healthRouter = Router();
 
 healthRouter.get('/health', async (_req: Request, res: Response) => {
   try {
-    // Quick DB check
-    await prisma.$queryRaw`SELECT 1`;
+    // Quick MongoDB ping
+    await prisma.$runCommandRaw({ ping: 1 });
 
     res.status(200).json({
       status: 'ok',
+      database: 'connected (mongodb)',
       uptime: process.uptime(),
       timestamp: new Date().toISOString()
     });

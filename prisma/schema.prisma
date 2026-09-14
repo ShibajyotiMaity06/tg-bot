@@ -1,5 +1,5 @@
 datasource db {
-  provider = "sqlite"
+  provider = "mongodb"
   url      = env("DATABASE_URL")
 }
 
@@ -8,7 +8,7 @@ generator client {
 }
 
 model User {
-  id               String           @id @default(cuid())
+  id               String           @id @default(auto()) @map("_id") @db.ObjectId
   telegramUserId   String           @unique
   telegramUsername String?
   firstName        String?
@@ -18,13 +18,11 @@ model User {
   subscriptions    Subscription[]
   payments         Payment[]
   telegramAccesses TelegramAccess[]
-
-  @@index([telegramUserId])
 }
 
 model Subscription {
-  id                     String           @id @default(cuid())
-  userId                 String
+  id                     String           @id @default(auto()) @map("_id") @db.ObjectId
+  userId                 String           @db.ObjectId
   user                   User             @relation(fields: [userId], references: [id], onDelete: Cascade)
   razorpaySubscriptionId String?          @unique
   razorpayPlanId         String?
@@ -43,10 +41,10 @@ model Subscription {
 }
 
 model Payment {
-  id                String        @id @default(cuid())
-  userId            String
+  id                String        @id @default(auto()) @map("_id") @db.ObjectId
+  userId            String        @db.ObjectId
   user              User          @relation(fields: [userId], references: [id], onDelete: Cascade)
-  subscriptionId    String?
+  subscriptionId    String?       @db.ObjectId
   subscription      Subscription? @relation(fields: [subscriptionId], references: [id], onDelete: SetNull)
   razorpayPaymentId String?       @unique
   razorpayOrderId   String?       @unique
@@ -56,14 +54,13 @@ model Payment {
   createdAt         DateTime      @default(now())
 
   @@index([userId])
-  @@index([razorpayPaymentId])
 }
 
 model TelegramAccess {
-  id             String        @id @default(cuid())
-  userId         String
+  id             String        @id @default(auto()) @map("_id") @db.ObjectId
+  userId         String        @db.ObjectId
   user           User          @relation(fields: [userId], references: [id], onDelete: Cascade)
-  subscriptionId String?
+  subscriptionId String?       @db.ObjectId
   subscription   Subscription? @relation(fields: [subscriptionId], references: [id], onDelete: SetNull)
   inviteLink     String?
   status         String        @default("ACTIVE") // ACTIVE, PENDING, REVOKED, EXPIRED, FAILED

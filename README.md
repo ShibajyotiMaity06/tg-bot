@@ -1,6 +1,6 @@
 # 🤖 Paid Telegram Private Channel Access Bot (Razorpay Backend)
 
-A complete, production-ready backend for managing paid access to private Telegram channels using **Node.js**, **TypeScript**, **Express**, **Prisma ORM**, **SQLite**, **GrammY (Telegram Bot API)**, and **Razorpay**.
+A complete, production-ready backend for managing paid access to private Telegram channels using **Node.js**, **TypeScript**, **Express**, **Prisma ORM**, **MongoDB (Atlas)**, **GrammY (Telegram Bot API)**, and **Razorpay**.
 
 ---
 
@@ -149,7 +149,7 @@ Fill in your actual values:
 PORT=3000
 NODE_ENV=development
 
-DATABASE_URL="file:./dev.db"
+DATABASE_URL="mongodb+srv://<username>:<password>@cluster0.iinr2u3.mongodb.net/tgbot?retryWrites=true&w=majority"
 
 # Telegram Bot Credentials
 TELEGRAM_BOT_TOKEN="123456789:ABCdefGHIjklMNOpqrSTUvwxYZ"
@@ -187,7 +187,7 @@ DEMO_IMAGE_URL=""
 # 1. Install dependencies
 npm install
 
-# 2. Push Prisma schema to SQLite
+# 2. Push Prisma schema & indexes to MongoDB
 npm run prisma:push
 
 # 3. Generate Prisma Client
