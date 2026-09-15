@@ -2,14 +2,10 @@ import { config } from './index.js';
 
 export const content = {
   welcomeTitle: `🌟 Welcome to <b>${config.CHANNEL_NAME}</b>!`,
-  welcomeDescription: `Gain exclusive, immediate access to our private premium community, VIP insights, market calls, and premium discussions.`,
-  
+  welcomeDescription: `get daily mms in the channel exclusive`,
+
   benefits: [
-    '🔥 Real-time high-conviction signals & alerts',
-    '📊 In-depth daily analysis & exclusive research',
-    '💬 Private discussions with top community members',
-    '⚡ Instant automated Telegram access 24/7',
-    '🔒 100% secure payment via Razorpay (UPI, Cards, NetBanking)'
+    'real unseen mms daily'
   ],
 
   demoCaption: `🎬 <b>Access to 100+ exclusive MMS videos for just ₹${config.PREMIUM_PRICE_INR}</b>\n\n` +
@@ -35,7 +31,7 @@ export const content = {
     `If your payment went through, simply type /status — the bot will re-verify and re-generate your link. If you still have issues, contact our support team:\n` +
     `📩 <b>Support</b>: @${config.SUPPORT_USERNAME}`,
 
-  paymentSuccessMessage: (channelName: string, inviteLink: string, expiryDate: string) => 
+  paymentSuccessMessage: (channelName: string, inviteLink: string, expiryDate: string) =>
     `🎉 <b>Payment Successful! Welcome to ${channelName}!</b>\n\n` +
     `✅ Your subscription is now <b>Active</b>.\n` +
     `📅 <b>Valid until</b>: ${expiryDate}\n\n` +
