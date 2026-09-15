@@ -43,7 +43,14 @@ async function bootstrap() {
       logger.warn('TELEGRAM_MODE is "webhook" but TELEGRAM_WEBHOOK_URL is not set.');
     }
   } else {
-    logger.info('🤖 Starting Telegram bot in POLLING mode (Local Development)...');
+    logger.info('🤖 Starting Telegram bot in POLLING mode...');
+    try {
+      // Clean up any stale webhooks so polling works immediately without conflicts
+      await bot.api.deleteWebhook();
+    } catch (e: any) {
+      logger.warn('Could not delete existing webhook:', { error: e.message });
+    }
+
     bot.start({
       onStart: (botInfo) => {
         logger.info(`🤖 Bot @${botInfo.username} started successfully`);
