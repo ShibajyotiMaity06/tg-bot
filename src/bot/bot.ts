@@ -3,7 +3,7 @@ import { handleStart } from './handlers/start.js';
 import { handleDemo } from './handlers/demo.js';
 import { handleBuy } from './handlers/buy.js';
 import { handleStatus } from './handlers/status.js';
-import { handleHelp } from './handlers/help.js';
+import { handleAdminStats } from './handlers/admin.js';
 import { logger } from '../utils/logger.js';
 
 export function setupBotHandlers() {
@@ -13,6 +13,8 @@ export function setupBotHandlers() {
   bot.command('buy', handleBuy);
   bot.command('status', handleStatus);
   bot.command('help', handleHelp);
+  bot.command('admin', handleAdminStats);
+  bot.command('stats', handleAdminStats);
 
   // Callback query actions from inline buttons
   bot.callbackQuery('see_demo', handleDemo);
@@ -20,6 +22,7 @@ export function setupBotHandlers() {
   bot.callbackQuery('check_status', handleStatus);
   bot.callbackQuery('show_help', handleHelp);
   bot.callbackQuery('back_to_menu', handleStart);
+  bot.callbackQuery('refresh_admin_stats', handleAdminStats);
 
   // Catch unhandled messages
   bot.on('message:text', async (ctx) => {
