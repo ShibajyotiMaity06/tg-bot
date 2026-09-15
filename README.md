@@ -174,7 +174,9 @@ SUPPORT_USERNAME="your_support_handle"
 PREMIUM_PRICE_INR=499
 SUBSCRIPTION_DURATION_DAYS=30
 
-# Demo Assets
+# Demo Assets (Video / Image)
+DEMO_VIDEO_PATH="demo.mp4"
+DEMO_VIDEO_URL=""
 DEMO_IMAGE_PATH="demo.png"
 DEMO_IMAGE_URL=""
 ```

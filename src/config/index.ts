@@ -25,7 +25,9 @@ const envSchema = z.object({
   CHANNEL_NAME: z.string().default('VIP Premium Channel'),
   SUPPORT_USERNAME: z.string().default('support'),
 
-  // Demo settings
+  // Demo settings (Video / Image)
+  DEMO_VIDEO_PATH: z.string().default('demo.mp4'),
+  DEMO_VIDEO_URL: z.string().optional().default(''),
   DEMO_IMAGE_PATH: z.string().default('demo.png'),
   DEMO_IMAGE_URL: z.string().optional().default(''),
 

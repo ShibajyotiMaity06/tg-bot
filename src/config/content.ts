@@ -12,9 +12,19 @@ export const content = {
     '🔒 100% secure payment via Razorpay (UPI, Cards, NetBanking)'
   ],
 
-  demoCaption: `🖼️ <b>Sneak Peek Inside ${config.CHANNEL_NAME}</b>\n\nHere is a preview of the high-value insights, actionable alerts, and deep research shared daily in our VIP channel. Subscribe today to unlock full access!`,
+  demoCaption: `🎬 <b>Access to 100+ exclusive MMS videos for just ₹${config.PREMIUM_PRICE_INR}</b>\n\n` +
+    `🔥 Unlock complete, instant access to the private <b>${config.CHANNEL_NAME}</b> channel!\n` +
+    `• 📹 100+ High Quality Uncensored Videos\n` +
+    `• ⚡ Daily New Additions & Leaks\n` +
+    `• 🔒 100% Private & Anonymous\n\n` +
+    `👇 <i>Click the button below to subscribe now for just ₹${config.PREMIUM_PRICE_INR}!</i>`,
 
-  demoFallbackText: `🖼️ <b>Sneak Peek Inside ${config.CHANNEL_NAME}</b>\n\nInside our VIP Channel, you get:\n• 🎯 <b>High Accuracy Daily Calls</b>\n• 📈 <b>Live Chart Breakdowns & Key Levels</b>\n• 💡 <b>Portfolio Allocation & Risk Management</b>\n• 🎙️ <b>Exclusive Weekly Voice Discussions</b>\n\n<i>To display a custom preview image, place a <code>demo.png</code> in the project root or configure <code>DEMO_IMAGE_URL</code> in .env.</i>`,
+  demoFallbackText: `🎬 <b>Access to 100+ exclusive MMS videos for just ₹${config.PREMIUM_PRICE_INR}</b>\n\n` +
+    `🔥 Unlock complete, instant access to the private <b>${config.CHANNEL_NAME}</b> channel!\n` +
+    `• 📹 100+ High Quality Uncensored Videos\n` +
+    `• ⚡ Daily New Additions & Leaks\n` +
+    `• 🔒 100% Private & Anonymous\n\n` +
+    `<i>(To display a video preview, place a <code>demo.mp4</code> file in the project root or configure <code>DEMO_VIDEO_URL</code> in .env)</i>`,
 
   helpText: `ℹ️ <b>How it Works & Support FAQ</b>\n\n` +
     `1️⃣ <b>Payment</b>: Click <b>💳 Buy Premium</b> to open a secure Razorpay checkout link (UPI / GPay / PhonePe / Cards / NetBanking supported).\n` +

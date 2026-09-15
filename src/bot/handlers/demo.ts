@@ -15,7 +15,28 @@ export async function handleDemo(ctx: Context) {
   const keyboard = getBackToMenuKeyboard();
 
   try {
-    // 1. Check if local demo image exists
+    // 1. Check if local demo video exists (e.g., demo.mp4 in root)
+    const localVideoPath = path.resolve(process.cwd(), config.DEMO_VIDEO_PATH);
+    if (fs.existsSync(localVideoPath)) {
+      await ctx.replyWithVideo(new InputFile(localVideoPath), {
+        caption,
+        parse_mode: 'HTML',
+        reply_markup: keyboard
+      });
+      return;
+    }
+
+    // 2. Check if remote demo video URL is configured
+    if (config.DEMO_VIDEO_URL && config.DEMO_VIDEO_URL.trim().length > 0) {
+      await ctx.replyWithVideo(config.DEMO_VIDEO_URL, {
+        caption,
+        parse_mode: 'HTML',
+        reply_markup: keyboard
+      });
+      return;
+    }
+
+    // 3. Fallback: Check if a local demo image exists (demo.png)
     const localImagePath = path.resolve(process.cwd(), config.DEMO_IMAGE_PATH);
     if (fs.existsSync(localImagePath)) {
       await ctx.replyWithPhoto(new InputFile(localImagePath), {
@@ -26,7 +47,7 @@ export async function handleDemo(ctx: Context) {
       return;
     }
 
-    // 2. Check if remote demo image URL is configured
+    // 4. Fallback: Check if remote demo image URL is configured
     if (config.DEMO_IMAGE_URL && config.DEMO_IMAGE_URL.trim().length > 0) {
       await ctx.replyWithPhoto(config.DEMO_IMAGE_URL, {
         caption,
@@ -36,7 +57,7 @@ export async function handleDemo(ctx: Context) {
       return;
     }
 
-    // 3. Fallback to rich preview text if no image file is found
+    // 5. Fallback to rich preview text if no media file is found
     await ctx.reply(fallback, {
       parse_mode: 'HTML',
       reply_markup: keyboard
