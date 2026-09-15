@@ -3,6 +3,7 @@ import { handleStart } from './handlers/start.js';
 import { handleDemo } from './handlers/demo.js';
 import { handleBuy } from './handlers/buy.js';
 import { handleStatus } from './handlers/status.js';
+import { handleHelp } from './handlers/help.js';
 import { handleAdminStats } from './handlers/admin.js';
 import { logger } from '../utils/logger.js';
 
