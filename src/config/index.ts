@@ -23,7 +23,7 @@ const envSchema = z.object({
   // Bot & Channel Customization
   BOT_USERNAME: z.string().default('PremiumAccessBot'),
   CHANNEL_NAME: z.string().default('VIP Premium Channel'),
-  SUPPORT_USERNAME: z.string().default('support'),
+  SUPPORT_USERNAME: z.string().default('Huehuehue568'),
 
   // Demo settings (Video / Image)
   DEMO_VIDEO_PATH: z.string().default('demo.mp4'),
