@@ -11,17 +11,8 @@ export async function findOrCreateUser(params: UpsertUserParams) {
   const { telegramUserId, telegramUsername, firstName } = params;
 
   try {
-    const user = await prisma.user.upsert({
+    let user = await prisma.user.findUnique({
       where: { telegramUserId },
-      update: {
-        telegramUsername: telegramUsername || undefined,
-        firstName: firstName || undefined,
-      },
-      create: {
-        telegramUserId,
-        telegramUsername,
-        firstName,
-      },
       include: {
         subscriptions: {
           orderBy: { createdAt: 'desc' },
@@ -34,7 +25,49 @@ export async function findOrCreateUser(params: UpsertUserParams) {
       }
     });
 
-    return user;
+    if (user) {
+      if (
+        (telegramUsername && telegramUsername !== user.telegramUsername) ||
+        (firstName && firstName !== user.firstName)
+      ) {
+        user = await prisma.user.update({
+          where: { id: user.id },
+          data: {
+            telegramUsername: telegramUsername || user.telegramUsername,
+            firstName: firstName || user.firstName,
+          },
+          include: {
+            subscriptions: {
+              orderBy: { createdAt: 'desc' },
+              take: 1
+            },
+            telegramAccesses: {
+              orderBy: { createdAt: 'desc' },
+              take: 1
+            }
+          }
+        });
+      }
+      return user;
+    }
+
+    return await prisma.user.create({
+      data: {
+        telegramUserId,
+        ...(telegramUsername ? { telegramUsername } : {}),
+        ...(firstName ? { firstName } : {}),
+      },
+      include: {
+        subscriptions: {
+          orderBy: { createdAt: 'desc' },
+          take: 1
+        },
+        telegramAccesses: {
+          orderBy: { createdAt: 'desc' },
+          take: 1
+        }
+      }
+    });
   } catch (error: any) {
     logger.error(`Error finding or creating user ${telegramUserId}:`, { error: error.message });
     throw error;
